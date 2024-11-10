@@ -169,4 +169,3 @@ This project is licensed under the MIT License.
 
 ---
 
-Feel free to adjust any section titles or add more visuals to enhance clarity for team members and stakeholders.
