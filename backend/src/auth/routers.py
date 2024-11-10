@@ -37,12 +37,16 @@ async def login_users(
     email = login_data.email
     password = login_data.password
 
+    # Fetch user by email from the database
     user = await user_service.get_user_by_email(email, session)
 
+    # Check if user exists
     if user is not None:
+        # Verify if the password is correct
         password_valid = verify_passwd(password, user.password_hash)
 
         if password_valid:
+            # Generate access token and refresh token
             access_token = create_access_token(
                 user_data={"email": user.email, "user_uid": str(user.uid)}
             )
@@ -53,16 +57,30 @@ async def login_users(
                 expiry=timedelta(days=REFRESH_TOKEN_EXPIRY)
             )
 
+            # Prepare response with user data
             response = JSONResponse(
                 content={
                     "message": "Login successful",
-                    "user": {"email": user.email, "user_uid": str(user.uid)}
+                    "user": {
+                        "email": user.email,
+                        "user_uid": str(user.uid),
+                        "first_name": user.first_name,  # Add any other fields
+                        "last_name": user.last_name,    # Add any other fields
+                    }
                 }
             )
-            response.set_cookie(key="access_toke", value=access_token)
+
+            # Set tokens in cookies
+            response.set_cookie(key="access_token", value=access_token)
             response.set_cookie(key="refresh_token", value=refresh_token)
+
             return response
         
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN, detail="Invalid Email or Password"
         )
+
+    # If the user doesn't exist
+    raise HTTPException(
+        status_code=status.HTTP_403_FORBIDDEN, detail="Invalid Email or Password"
+    )

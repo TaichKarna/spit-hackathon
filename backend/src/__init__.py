@@ -3,6 +3,7 @@ from contextlib import asynccontextmanager
 from src.db.main import initdb
 from src.auth.routers import auth_router
 from src.channels.routers import channel_router
+from src.fields.routers import field_router
 from fastapi.middleware.cors import CORSMiddleware
 
 version = 'v1'
@@ -36,4 +37,5 @@ app.add_middleware(
 
 app.include_router(router=auth_router,prefix='/api/{version}/auth', tags=["auth"])
 app.include_router(channel_router, prefix="/api/v1/channels", tags=["channels"])
+app.include_router(field_router, prefix="/api/v1/fields", tags=["fields"])
 
