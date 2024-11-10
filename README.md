@@ -1,135 +1,172 @@
-Air Quality Monitoring System
 
-Project Overview
-This project aims to build a Real-Time Urban Air Quality Monitoring and Predictive Analytics System to monitor air pollution levels in urban areas. By deploying IoT-based sensors to measure pollutants such as PM2.5, PM10, and CO2, the system provides valuable insights into air quality, enabling individuals and communities to make informed decisions for their health and surroundings. This solution is affordable, scalable, and can be used to guide policymakers in pollution mitigation efforts.
+---
 
-Problem Statement
-Urban air pollution is a growing environmental concern affecting public health, quality of life, and the environment. However, monitoring air quality at a local level remains challenging due to the high cost of equipment and the lack of real-time, accessible data. This project addresses these issues by creating an affordable and scalable monitoring system that provides accurate and timely data, allowing residents and policymakers to respond effectively to pollution.
+# **Air Quality Monitoring System**
 
-Solution Overview
-The Air Quality Monitoring System uses IoT sensors to gather real-time data on key air pollutants, including PM2.5, PM10, and CO2, along with environmental factors like temperature and humidity. This data is then sent to a cloud-based platform, where it is processed and visualized on a web dashboard for easy access and analysis.
+## **Project Overview**
+This project aims to build a **Real-Time Urban Air Quality Monitoring and Predictive Analytics System** to monitor air pollution levels in urban areas. By deploying **IoT-based sensors** to measure pollutants (PM2.5, PM10, CO2), the system provides insights into air quality, empowering individuals and communities to make informed health decisions. This scalable, affordable solution also aids policymakers in guiding pollution mitigation efforts.
 
-Key Features
-Real-Time Monitoring: Collects data on air quality and environmental factors in real-time.
-Data Visualization: Displays pollution levels
+---
 
-Solutions
-Solution Approach for Real-Time Air Quality Monitoring System
-1. Hardware Components
-The following components are required to build the physical setup for monitoring air quality:
+## **Problem Statement**
+Urban air pollution is a pressing environmental issue, impacting public health, quality of life, and the environment. Monitoring local air quality remains challenging due to the **high cost of equipment** and the **lack of real-time accessible data**. This project addresses these issues by creating a **scalable, affordable monitoring system** that provides accurate, timely data for residents and policymakers to respond effectively.
 
-Sensors:
-MQ-135: For measuring air quality (detects CO2, ammonia, benzene, and other harmful gases).
-MQ-7: For measuring carbon monoxide (CO) levels.
-PM2.5 & PM10 Sensor: For measuring particulate matter in the air (PM2.5 and PM10).
-DHT11/DHT22: For measuring temperature and humidity.
+---
+## **Dashboard Images**
 
-Microcontroller:
-NodeMCU (ESP8266) or ESP32: These microcontrollers come with built-in Wi-Fi, making them suitable for IoT applications by allowing the device to send data to a web server.
+### **1. Analysis**
+![Analysis Dashboard](images/analysis.png)
 
-Power Supply:
-5V USB Power Supply: To power the microcontroller and sensors.
+### **2. Air Quality Index (AQI)**
+![AQI Dashboard](images/aqi.png)
 
-Breadboard and Connecting Wires:
-Jumper Wires and Breadboard: For setting up the circuit connections between the sensors and the microcontroller.
+### **3. Dashboard Working**
+![Working Dashboard](images/dashboard.png)
 
-2. Software Requirements
+### **4. Full Map View**
+![Full Map](images/map-full.png)
 
-Arduino IDE:
-Use the Arduino IDE to program the NodeMCU/ESP32 microcontroller. Arduino libraries are also available for the sensors, making it easier to read data from them.
-Backend Server and Database:
-Firebase, AWS, or ThingSpeak can be used to collect and store the sensor data in real-time.
-Node.js with Express can be used for setting up a custom backend API if needed.
+### **5. Mini Map View**
+![Mini Map](images/map-mini.png)
 
-Web Dashboard: HTML, CSS, JavaScript for front-end development.
-Chart.js or D3.js for data visualization to display pollution levels on a real-time dashboard.
-AJAX/WebSockets for live updates.
-Data Analysis and Prediction (optional):
-Python with libraries like Scikit-Learn for machine learning if you want to add predictive analytics.
+### **6. Recommendations**
+![Recommendations](images/recommendation.png)
 
-3. System Architecture
-The proposed architecture of the system is as follows:
+### **7. Settings**
+![Settings](images/setting.png)
 
-Data Collection:
+### **8. Login Page**
+![Login](images/login.png)
 
-The sensors (MQ-135, MQ-7, PM2.5/PM10 sensor, DHT11) collect data on pollutants and environmental conditions.
-This data is read by the microcontroller (NodeMCU/ESP32) via analog or digital pins.
-Data Transmission:
+### **9. Signup Page**
+![Signup](images/signup.png)
 
-The microcontroller transmits the collected data to a cloud-based server (Firebase, AWS IoT, or ThingSpeak) over Wi-Fi.
-Data is sent at regular intervals (e.g., every 10 seconds) to minimize network usage while ensuring real-time updates.
-Data Processing and Storage:
+----
 
-The cloud server receives the data and stores it in a database.
-Processing includes applying calibration formulas to ensure accurate readings and possibly averaging the data over time.
-Data Visualization:
+## **Solution Overview**
+The **Air Quality Monitoring System** gathers real-time data on pollutants (PM2.5, PM10, CO2) and environmental factors (temperature, humidity) using IoT sensors. This data is transmitted to a **cloud-based platform** for processing and is visualized on a **web dashboard** for easy access and analysis.
 
-The web dashboard fetches data from the cloud server and displays real-time and historical pollution levels.
-Visualization includes graphs for PM2.5, PM10, CO, CO2, temperature, and humidity levels.
-Alert features can be implemented to notify users if pollutant levels exceed safe thresholds.
-Predictive Analysis (Optional):
+---
 
-Using a machine learning model to predict air quality trends based on historical data.
-Displaying predictions on the dashboard to inform users about possible future pollution levels.
+## **Key Features**
 
-4. Implementation Steps
+- **Real-Time Monitoring**: Collects data on air quality and environmental factors in real time.
+- **Data Visualization**: Displays pollution levels on a web dashboard for quick interpretation.
+  
+---
 
-Step 1: Hardware Setup
-Connect the MQ-135 and MQ-7 sensors to the analog/digital pins of the microcontroller.
-Connect the PM2.5/PM10 sensor for particulate matter detection.
-Connect the DHT11/DHT22 sensor for temperature and humidity readings.
-Use a breadboard and jumper wires to set up connections. Ensure each sensor is connected to both power and ground.
-Power the microcontroller with a 5V USB power supply.
+## **Solution Approach**
 
-Step 2: Programming the Microcontroller
-Write code in the Arduino IDE to read data from each sensor and send it to the cloud.
-Use libraries such as Adafruit_MQ135, DHT, and specific libraries for PM2.5/PM10 if available.
-Set up the microcontroller to connect to Wi-Fi and transmit data to the cloud service you selected (e.g., Firebase).
+### **1. Hardware Components**
 
-Step 3: Setting Up the Cloud Server
-Choose a cloud platform (Firebase, AWS IoT, or ThingSpeak).
-Create an account and set up a database or channel for data storage.
-Configure the database to accept incoming data from the microcontroller and store it with timestamps.
+**Sensors**:
+- **MQ-135**: Measures air quality (CO2, ammonia, benzene, etc.).
+- **MQ-7**: Measures carbon monoxide (CO) levels.
+- **PM2.5 & PM10 Sensor**: Detects particulate matter in the air.
+- **DHT11/DHT22**: Measures temperature and humidity.
 
-Step 4: Developing the Web Dashboard
-Design a front-end dashboard using HTML, CSS, and JavaScript.
-Use AJAX/WebSockets to enable live data updates.
-Use Chart.js or D3.js to display data in graphical form, making it easy to visualize trends.
-Implement thresholds for each pollutant, setting up alerts or color changes in the dashboard when levels exceed safe limits.
+**Microcontroller**:
+- **NodeMCU (ESP8266)** or **ESP32**: Microcontrollers with built-in Wi-Fi for IoT applications.
 
-Step 5: Data Analysis and Prediction (Optional)
-If you want to include predictions, use Python to build a machine learning model based on historical data.
-Train the model to predict pollution levels based on past trends.
-Integrate this prediction into the web dashboard, showing forecasted air quality levels.
+**Power Supply**:
+- **5V USB Power Supply**: Powers the microcontroller and sensors.
 
-Step 6: Testing and Calibration
-Test the system in different locations to verify that sensor readings are accurate.
-Calibrate the sensors based on the environment to improve the accuracy of the data.
+**Breadboard & Connecting Wires**:
+- **Jumper Wires**: For circuit connections between sensors and microcontroller.
 
-Step 7: Final Deployment and Documentation
-Once tested, deploy the sensors in designated locations.
-Document the project, including setup, functionality, and usage instructions.
-5. Cost-Effective Considerations
-To make the system affordable:
-Use low-cost sensors like the MQ series, which offer a reasonable accuracy level at a low price.
-Optimize data transmission to reduce bandwidth usage (e.g., sending data every 10 seconds instead of continuously).
-Consider using open-source software for backend and visualization.
+---
 
-6. Tasks for Team Members
-For a team member like Siddhi, who may not have technical experience:
-Documentation: Document each step, from hardware setup to software configuration.
-Presentation: Design slides to explain the problem, solution, and impact of the project.
-UI Design Assistance: Help create a visually appealing web dashboard layout and organize the data visualization elements.
+### **2. Software Requirements**
 
-Sample Data Flow Diagram
-[Sensors] -> (NodeMCU/ESP32) -> (Cloud Server) -> (Web Dashboard)
-Sensors: Collect real-time data on pollutants and environmental factors.
-NodeMCU/ESP32: Transmits data to the cloud.
-Cloud Server: Stores and processes the data.
-Web Dashboard: Visualizes data and provides insights to users.
+- **Arduino IDE**: Used for microcontroller programming.
+- **Backend Server & Database**: Firebase, AWS, or ThingSpeak for data collection and storage.
+- **Web Dashboard**: HTML, CSS, JavaScript (using Chart.js or D3.js for visualization).
+- **Data Analysis & Prediction** (optional): Python (Scikit-Learn) for machine learning.
 
-Future Improvements
-Advanced Sensors: Replace MQ series with more accurate, industrial-grade sensors for large-scale applications.
-AI Integration: Use machine learning to provide actionable insights, such as recommending times of day with lower pollution levels.
-Mobile Application: Create a mobile app to make air quality information even more accessible.
-This solution provides a practical, affordable way to monitor urban air quality in real time, offering valuable insights to residents, policymakers, and urban planners. By making this data accessible, we can contribute to a healthier, more informed, and sustainable community.
+---
+
+### **3. System Architecture**
+
+#### **Data Collection**
+- **Sensors** collect data on pollutants and environment.
+- Data read by **NodeMCU/ESP32** via analog/digital pins.
+
+#### **Data Transmission**
+- Microcontroller sends data to a **cloud server** over Wi-Fi at regular intervals.
+
+#### **Data Processing & Storage**
+- Cloud server processes and stores data in a **database**.
+
+#### **Data Visualization**
+- Web dashboard visualizes real-time and historical data.
+- **Alert System** for pollutant levels exceeding safe thresholds.
+
+#### **Predictive Analysis (Optional)**
+- Machine learning model for air quality trends and predictions on dashboard.
+
+---
+
+### **4. Implementation Steps**
+
+1. **Hardware Setup**:
+   - Connect sensors to microcontroller using jumper wires on a breadboard.
+2. **Programming the Microcontroller**:
+   - Use Arduino IDE to read sensor data and transmit it to the cloud.
+3. **Cloud Server Setup**:
+   - Set up Firebase, AWS IoT, or ThingSpeak to receive and store data.
+4. **Web Dashboard Development**:
+   - Build a front-end with live data updates and graphical representations.
+5. **Data Analysis & Prediction (Optional)**:
+   - Use Python to train a model on historical data and integrate predictions.
+6. **Testing & Calibration**:
+   - Test in various environments to ensure data accuracy.
+7. **Deployment & Documentation**:
+   - Deploy the system, complete documentation, and provide setup instructions.
+
+---
+
+### **5. Cost-Effective Considerations**
+- Use **low-cost sensors** (e.g., MQ series) for affordable data collection.
+- Optimize **data transmission intervals** (e.g., every 10 seconds) to reduce bandwidth.
+
+---
+
+### **6. Tasks for Team Members**
+
+**For Non-Technical Team Members (e.g., Siddhi)**:
+- **Documentation**: Document steps for hardware setup, software configuration.
+- **Presentation**: Design slides to explain problem, solution, and project impact.
+- **UI Design Assistance**: Help design an appealing dashboard layout.
+
+---
+
+### **7. Sample Data Flow Diagram**
+
+```mermaid
+graph TD
+    Sensors -->|Collect real-time data| NodeMCU/ESP32
+    NodeMCU/ESP32 -->|Transmits data| CloudServer
+    CloudServer -->|Stores data| Database
+    Database -->|Fetches and displays data| WebDashboard
+```
+
+---
+
+## **Future Improvements**
+
+- **Advanced Sensors**: Upgrade to industrial-grade sensors for accuracy.
+- **AI Integration**: Add machine learning insights to recommend low-pollution times.
+- **Mobile Application**: Develop a mobile app for increased accessibility.
+
+---
+
+This project presents a **practical, affordable solution** to monitor urban air quality in real-time, benefiting residents, policymakers, and urban planners. By making air quality data accessible, we contribute to a healthier, more sustainable community.
+
+--- 
+
+### **License**
+This project is licensed under the MIT License.
+
+---
+
+Feel free to adjust any section titles or add more visuals to enhance clarity for team members and stakeholders.
