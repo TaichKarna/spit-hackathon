@@ -15,23 +15,32 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/custom/button'
 import { PasswordInput } from '@/components/custom/password-input'
 import { cn } from '@/lib/utils'
+import { useNavigate } from 'react-router-dom'
 
 interface SignUpFormProps extends HTMLAttributes<HTMLDivElement> {}
 
 const formSchema = z
   .object({
+    first_name: z
+      .string()
+      .min(1, { message: 'Please enter your first name' })
+      .max(25, { message: 'First name must be at most 25 characters long' }),
+    last_name: z
+      .string()
+      .min(1, { message: 'Please enter your last name' })
+      .max(25, { message: 'Last name must be at most 25 characters long' }),
+    username: z
+      .string()
+      .min(1, { message: 'Please enter your username' })
+      .min(3, { message: 'Username must be at least 3 characters long' }),
     email: z
       .string()
       .min(1, { message: 'Please enter your email' })
       .email({ message: 'Invalid email address' }),
     password: z
       .string()
-      .min(1, {
-        message: 'Please enter your password',
-      })
-      .min(7, {
-        message: 'Password must be at least 7 characters long',
-      }),
+      .min(1, { message: 'Please enter your password' })
+      .min(7, { message: 'Password must be at least 7 characters long' }),
     confirmPassword: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {
@@ -41,23 +50,52 @@ const formSchema = z
 
 export function SignUpForm({ className, ...props }: SignUpFormProps) {
   const [isLoading, setIsLoading] = useState(false)
-
+  const [error, setError] = useState<string | null>(null)
+  const navigate = useNavigate()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      first_name: '',
+      last_name: '',
+      username: '',
       email: '',
       password: '',
       confirmPassword: '',
     },
   })
 
-  function onSubmit(data: z.infer<typeof formSchema>) {
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
     setIsLoading(true)
-    console.log(data)
+    setError(null)
 
-    setTimeout(() => {
+    try {
+      const response = await fetch('http://127.0.0.1:8000/api/v1/auth/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          first_name: data.first_name,
+          last_name: data.last_name,
+          username: data.username,
+          email: data.email,
+          password: data.password,
+        }),
+      })
+
+      const result = await response.json()
+
+      if (response.ok) {
+        console.log('Account created successfully', result)
+        navigate('/sign-in')
+      } else {
+        setError(result.message || 'Something went wrong, please try again.')
+      }
+    } catch (err) {
+      setError('An unexpected error occurred. Please try again later.')
+    } finally {
       setIsLoading(false)
-    }, 3000)
+    }
   }
 
   return (
@@ -65,6 +103,45 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className='grid gap-2'>
+            <FormField
+              control={form.control}
+              name='first_name'
+              render={({ field }) => (
+                <FormItem className='space-y-1'>
+                  <FormLabel>First Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder='Your first name' {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name='last_name'
+              render={({ field }) => (
+                <FormItem className='space-y-1'>
+                  <FormLabel>Last Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder='Your last name' {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name='username'
+              render={({ field }) => (
+                <FormItem className='space-y-1'>
+                  <FormLabel>Username</FormLabel>
+                  <FormControl>
+                    <Input placeholder='Your username' {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name='email'
@@ -104,6 +181,7 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
                 </FormItem>
               )}
             />
+            {error && <div className="text-red-500 text-sm">{error}</div>}
             <Button className='mt-2' loading={isLoading}>
               Create Account
             </Button>
